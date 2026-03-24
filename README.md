@@ -38,11 +38,15 @@ Everything you need to start working with AI-powered development tools, installe
 
 There are three steps. Run them in order. Each one builds on the last.
 
-**Step 1** is the only part that feels "techy." This step gets the bare essentials on your machine so Claude (your AI assistant) and Warp (your new terminal) can run. You paste one command and it handles the rest, but there are a few manual steps after it finishes, like setting up your Warp account and logging into Claude. This is the most hands-on part of the entire process. After Step 1, you can ask Claude questions at any point. If something doesn't make sense, just ask. That's the whole point.
+**[Step 1](#step-1---get-claude-running)** is the only part that feels "techy." This step gets the bare essentials on your machine so Claude (your AI assistant) and Warp (your new terminal) can run. You paste one command and it handles the rest, but there are a few manual steps after it finishes, like setting up your Warp account and logging into Claude. This is the most hands-on part of the entire process. After Step 1, you can ask Claude questions at any point. If something doesn't make sense, just ask. That's the whole point.
 
-**Step 2** is where you install the rest of your development tools. Things like file converters, search tools, and utilities. You run this from inside Warp after Step 1 is done. Much more straightforward.
+**[Step 2](#step-2---dev-tools)** is where you install the rest of your development tools. Things like file converters, search tools, and utilities. You run this from inside Warp after Step 1 is done. Much more straightforward.
 
-**Step 3** is where you set up ClaudeFlow. This is the multi-agent orchestration layer that turns Claude from a single assistant into a full team of AI agents. It also cuts your token costs by up to 75% with smart model routing. This is where everything comes together.
+**[Step 3](#step-3---claudeflow--context-hub)** is where you set up ClaudeFlow. This is the multi-agent orchestration layer that turns Claude from a single assistant into a full team of AI agents. It also cuts your token costs by up to 75% with smart model routing. This is where everything comes together.
+
+**[Step 4](#step-4---design-tools)** gives Claude professional design skills and a library of production-ready UI components.
+
+**[Step 5](#step-5---second-brain-obsidian)** sets up your personal knowledge management system in Obsidian. This is the biggest step but also the most rewarding.
 
 ### Already have Claude Code installed?
 
