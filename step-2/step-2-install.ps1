@@ -202,6 +202,53 @@ function Install-Wget {
 }
 
 # ==========================================================================
+# Auto-save memory hook
+# ==========================================================================
+function Configure-MemoryHook {
+    $settingsPath = "$env:USERPROFILE\.claude\settings.json"
+    $claudeDir = "$env:USERPROFILE\.claude"
+
+    if (!(Test-Path $claudeDir)) { New-Item -ItemType Directory -Path $claudeDir -Force | Out-Null }
+
+    if ((Test-Path $settingsPath) -and (Select-String -Path $settingsPath -Pattern "Stop" -Quiet -ErrorAction SilentlyContinue)) {
+        Write-Ok "Memory auto-save hook already configured"
+        return
+    }
+
+    Write-Info "Configuring memory auto-save hook..."
+
+    $hookConfig = @{
+        hooks = @{
+            Stop = @(
+                @{
+                    hooks = @(
+                        @{
+                            type = "command"
+                            command = 'SESSION_ID=$(jq -r ''.session_id // empty'' 2>/dev/null); MARKER="/tmp/claude-memory-saved-${SESSION_ID}"; if [ -f "$MARKER" ]; then echo ''{"continue": true}''; else touch "$MARKER"; echo ''{"continue": false, "stopReason": "MANDATORY: Before ending, review this conversation and save any key decisions, project context, outcomes, or user preferences to memory files. If nothing noteworthy was discussed, acknowledge that and stop."}''; fi'
+                            timeout = 5
+                        }
+                    )
+                }
+            )
+        }
+    }
+
+    if (Test-Path $settingsPath) {
+        try {
+            $existing = Get-Content $settingsPath -Raw | ConvertFrom-Json
+            $existing | Add-Member -NotePropertyName "hooks" -NotePropertyValue $hookConfig.hooks -Force
+            $existing | ConvertTo-Json -Depth 10 | Set-Content $settingsPath
+            Write-Ok "Memory auto-save hook configured"
+        } catch {
+            Write-SoftFail "Could not configure memory hook. You can add it manually later."
+        }
+    } else {
+        $hookConfig | ConvertTo-Json -Depth 10 | Set-Content $settingsPath
+        Write-Ok "Memory auto-save hook configured"
+    }
+}
+
+# ==========================================================================
 # Self-test
 # ==========================================================================
 function Test-AllTools {
@@ -337,6 +384,7 @@ function Main {
     Install-Tree
     Install-Fzf
     Install-Wget
+    Configure-MemoryHook
     Test-AllTools
     Show-Summary
 }

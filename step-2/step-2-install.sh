@@ -402,6 +402,57 @@ run_self_test() {
 }
 
 # -----------------------------------------------------------------------------
+# Auto-save memory hook — saves conversation context on session end
+# -----------------------------------------------------------------------------
+configure_memory_hook() {
+    CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+
+    # Create .claude dir if needed
+    mkdir -p "$HOME/.claude"
+
+    # Check if hook already exists
+    if [ -f "$CLAUDE_SETTINGS" ] && grep -q '"Stop"' "$CLAUDE_SETTINGS" 2>/dev/null; then
+        success "Memory auto-save hook already configured"
+        return
+    fi
+
+    info "Configuring memory auto-save hook..."
+
+    if [ -f "$CLAUDE_SETTINGS" ]; then
+        # Settings file exists — add hooks if not present
+        if command -v jq &>/dev/null; then
+            HOOK_CMD='SESSION_ID=$(jq -r '"'"'.session_id // empty'"'"' 2>/dev/null); MARKER="/tmp/claude-memory-saved-${SESSION_ID}"; if [ -f "$MARKER" ]; then echo '"'"'{"continue": true}'"'"'; else touch "$MARKER"; echo '"'"'{"continue": false, "stopReason": "MANDATORY: Before ending, review this conversation and save any key decisions, project context, outcomes, or user preferences to memory files. If nothing noteworthy was discussed, acknowledge that and stop."}'"'"'; fi'
+
+            jq --arg cmd "$HOOK_CMD" '.hooks = (.hooks // {}) | .hooks.Stop = [{"hooks": [{"type": "command", "command": $cmd, "timeout": 5}]}]' "$CLAUDE_SETTINGS" > "${CLAUDE_SETTINGS}.tmp" \
+                && mv "${CLAUDE_SETTINGS}.tmp" "$CLAUDE_SETTINGS"
+            success "Memory auto-save hook configured"
+        else
+            warn "jq not available yet, skipping hook config. Run Step 2 again after jq installs."
+        fi
+    else
+        # No settings file — create one with the hook
+        cat > "$CLAUDE_SETTINGS" << 'SETTINGS_EOF'
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "SESSION_ID=$(jq -r '.session_id // empty' 2>/dev/null); MARKER=\"/tmp/claude-memory-saved-${SESSION_ID}\"; if [ -f \"$MARKER\" ]; then echo '{\"continue\": true}'; else touch \"$MARKER\"; echo '{\"continue\": false, \"stopReason\": \"MANDATORY: Before ending, review this conversation and save any key decisions, project context, outcomes, or user preferences to memory files. If nothing noteworthy was discussed, acknowledge that and stop.\"}'; fi",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
+SETTINGS_EOF
+        success "Memory auto-save hook configured"
+    fi
+}
+
+# -----------------------------------------------------------------------------
 # Summary
 # -----------------------------------------------------------------------------
 print_summary() {
@@ -456,6 +507,7 @@ main() {
     install_tree
     install_fzf
     install_wget
+    configure_memory_hook
     run_self_test
     print_summary
 }
