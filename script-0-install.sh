@@ -33,12 +33,29 @@ detect_os() {
     info "Detected OS: $OS"
 
     # Detect user's actual shell for profile writes
-    case "$SHELL" in
+    # Use ${SHELL:-} to avoid crash when SHELL is unset (set -u safe)
+    case "${SHELL:-/bin/bash}" in
         */zsh)  USER_SHELL="zsh";  SHELL_RC="$HOME/.zshrc" ;;
         */bash) USER_SHELL="bash"; SHELL_RC="$HOME/.bashrc" ;;
-        *)      USER_SHELL="zsh";  SHELL_RC="$HOME/.zshrc" ;;
+        *)      USER_SHELL="bash"; SHELL_RC="$HOME/.bashrc" ;;
     esac
     info "Detected shell: $USER_SHELL ($SHELL_RC)"
+}
+
+# -----------------------------------------------------------------------------
+# Preflight checks
+# -----------------------------------------------------------------------------
+preflight_checks() {
+    # Block running as root — nvm and Homebrew should not be installed as root
+    if [ "$(id -u)" -eq 0 ]; then
+        fail "Do not run this script as root or with sudo. Run as your normal user account."
+    fi
+
+    # Verify internet connectivity
+    if ! curl -fsSL --connect-timeout 5 https://raw.githubusercontent.com/ &>/dev/null; then
+        fail "No internet connection detected. This script requires internet access."
+    fi
+    success "Internet connectivity verified"
 }
 
 # -----------------------------------------------------------------------------
@@ -69,8 +86,15 @@ install_build_tools() {
             echo -e "    ${YELLOW}Click 'Install' and wait for it to finish.${NC}"
             echo -e "    ${YELLOW}This can take a few minutes...${NC}"
             echo ""
+            # Wait up to 15 minutes (180 x 5s) — CLT download can be slow
+            CLT_WAIT=0
+            CLT_MAX=180
             until xcode-select -p &>/dev/null; do
                 sleep 5
+                CLT_WAIT=$((CLT_WAIT + 1))
+                if [ "$CLT_WAIT" -ge "$CLT_MAX" ]; then
+                    fail "Xcode Command Line Tools installation timed out after 15 minutes. Please install manually: xcode-select --install"
+                fi
             done
             success "Xcode Command Line Tools installed"
         fi
@@ -565,6 +589,7 @@ main() {
     echo ""
 
     detect_os
+    preflight_checks
     update_package_index
     install_build_tools
     install_homebrew
