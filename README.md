@@ -73,21 +73,21 @@ This step is the foundation. It installs the minimum needed to get Claude Code w
 
 **How to open Terminal:** On Mac, press **Cmd+Space** to open Spotlight, type **Terminal**, and hit Enter. On Linux, look for "Terminal" in your applications menu, or press **Ctrl+Alt+T**.
 
-Paste this command and hit Enter:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-1/step-1-install.sh | bash
-```
+> [!IMPORTANT]
+> **Copy and paste this into Terminal, then hit Enter:**
+> ```bash
+> curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-1/step-1-install.sh | bash
+> ```
 
 ### Windows
 
 **How to open PowerShell:** Press the **Windows key**, type **PowerShell**, and click on it.
 
-Paste this command and hit Enter:
-
-```powershell
-irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-1/step-1-install.ps1 | iex
-```
+> [!IMPORTANT]
+> **Copy and paste this into PowerShell, then hit Enter:**
+> ```powershell
+> irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-1/step-1-install.ps1 | iex
+> ```
 
 ### What This Step Installs
 
@@ -179,11 +179,11 @@ If you haven't already, close your old terminal (press **Ctrl+C** if something i
 
 #### 2b. Launch Claude
 
-In Warp, type this command:
-
-```bash
-cskip
-```
+> [!IMPORTANT]
+> **Type this in Warp and hit Enter:**
+> ```bash
+> cskip
+> ```
 
 If this is your first time, Claude will automatically open a browser and ask you to log in. Sign in with your Anthropic account.
 
@@ -201,17 +201,19 @@ You can always switch back to normal mode later for regular work. This is just f
 
 #### 2c. Run the install
 
-Once you're inside the Claude session, paste this and hit Enter:
+Once you're inside the Claude session, paste one of these and hit Enter:
 
-**macOS / Linux:**
-```
-run this command to install my dev tools: curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-2/step-2-install.sh | bash
-```
+> [!IMPORTANT]
+> **macOS / Linux. Paste this into your Claude session:**
+> ```
+> run this command to install my dev tools: curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-2/step-2-install.sh | bash
+> ```
 
-**Windows:**
-```
-run this command to install my dev tools: irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-2/step-2-install.ps1 | iex
-```
+> [!IMPORTANT]
+> **Windows. Paste this into your Claude session:**
+> ```
+> run this command to install my dev tools: irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-2/step-2-install.ps1 | iex
+> ```
 
 Claude will run the install for you. You can watch it work. If Claude tells you to restart your terminal at any point, just close the window, reopen Warp, type `cskip` again, and let Claude know where you left off. It'll pick right back up.
 
@@ -275,17 +277,19 @@ Together, ClaudeFlow and Context Hub are what take you from "using AI" to actual
 
 You should still be in Warp from Step 2. If you closed it, open Warp and type `cskip` to start a new Claude session. Remember, you can press **Shift+Tab** at any time to toggle auto-approve on or off.
 
-Once you're inside the Claude session, paste this and hit Enter:
+Once you're inside the Claude session, paste one of these and hit Enter:
 
-**macOS / Linux:**
-```
-run this command to set up ClaudeFlow and Context Hub: curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-3/step-3-install.sh | bash
-```
+> [!IMPORTANT]
+> **macOS / Linux. Paste this into your Claude session:**
+> ```
+> run this command to set up ClaudeFlow and Context Hub: curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-3/step-3-install.sh | bash
+> ```
 
-**Windows:**
-```
-run this command to set up ClaudeFlow and Context Hub: irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-3/step-3-install.ps1 | iex
-```
+> [!IMPORTANT]
+> **Windows. Paste this into your Claude session:**
+> ```
+> run this command to set up ClaudeFlow and Context Hub: irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-3/step-3-install.ps1 | iex
+> ```
 
 Claude will run the install for you. Same as Step 2. If Claude tells you to restart your terminal, close the window, reopen Warp, type `cskip`, and let Claude know where you left off.
 
@@ -353,17 +357,19 @@ While the UI/UX Pro Max Skill handles the design thinking, 21st.dev Magic handle
 
 You should still be in Warp. If you closed it, open Warp and type `cskip` to start a new Claude session.
 
-Once you're inside the Claude session, paste this and hit Enter:
+Once you're inside the Claude session, paste one of these and hit Enter:
 
-**macOS / Linux:**
-```
-run this command to install design tools: curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-4/step-4-install.sh | bash
-```
+> [!IMPORTANT]
+> **macOS / Linux. Paste this into your Claude session:**
+> ```
+> run this command to install design tools: curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-4/step-4-install.sh | bash
+> ```
 
-**Windows:**
-```
-run this command to install design tools: irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-4/step-4-install.ps1 | iex
-```
+> [!IMPORTANT]
+> **Windows. Paste this into your Claude session:**
+> ```
+> run this command to install design tools: irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/step-4/step-4-install.ps1 | iex
+> ```
 
 ### After the script runs, set up 21st.dev
 
@@ -399,15 +405,17 @@ New steps and updates get added to this repo over time. If you've already comple
 
 Or if you prefer to run it directly without Claude, just paste the command into Warp on its own.
 
-**macOS / Linux:**
-```
-run this update command: curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/update.sh | bash
-```
+> [!IMPORTANT]
+> **macOS / Linux. Paste this into your Claude session (or Warp directly):**
+> ```
+> run this update command: curl -fsSL https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/update.sh | bash
+> ```
 
-**Windows:**
-```
-run this update command: irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/update.ps1 | iex
-```
+> [!IMPORTANT]
+> **Windows. Paste this into your Claude session (or Warp directly):**
+> ```
+> run this update command: irm https://raw.githubusercontent.com/lorecraft-io/ai-super-user-setup/main/update.ps1 | iex
+> ```
 
 ---
 
